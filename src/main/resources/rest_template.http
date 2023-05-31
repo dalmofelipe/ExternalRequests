@@ -1,11 +1,12 @@
 @PORT=8000
 @HOST=http://localhost
-@POKEMON_NAME=BLASTOISE
+@POKEMON_NAME=blastoise
 
 
 ### REST TEMPLATE
 
 ### REQUISICAO DIRETA EM RESPONSE ENTITY
+### Retorna todas as informações do pokemon!!! É coisa pra caramba 12 a 15k linhas
 GET {{HOST}}:{{PORT}}/rest-template/pokemon/{{POKEMON_NAME}} HTTP/1.1
 
 
@@ -13,5 +14,5 @@ GET {{HOST}}:{{PORT}}/rest-template/pokemon/{{POKEMON_NAME}} HTTP/1.1
 GET {{HOST}}:{{PORT}}/rest-template/pokemon/json/{{POKEMON_NAME}} HTTP/1.1
 
 
-### LENDO DADOS MAPPED CLASS
+### LENDO DADOS DA CLASSE MAPEADA
 GET {{HOST}}:{{PORT}}/rest-template/pokemon/class/{{POKEMON_NAME}} HTTP/1.1

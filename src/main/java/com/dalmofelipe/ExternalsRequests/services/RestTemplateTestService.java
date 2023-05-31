@@ -2,7 +2,6 @@ package com.dalmofelipe.ExternalsRequests.services;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -56,21 +55,32 @@ public class RestTemplateTestService {
         Assert.notNull(name.asText(), "name não encontrado");
 
         JsonNode baseExperience = root.path("base_experience");
-        Assert.notNull(baseExperience.asInt(), "Experiencia base não encontrado");
+        Assert.notNull(baseExperience.asInt(), "experiencia base não encontrado");
         Assert.isInstanceOf(Integer.class, baseExperience.asInt(), 
-            "Experiencia base não parseado para numero Inteiro");
+            "experiencia base não parseado para numero Inteiro");
         
-        List<JsonNode> movesPath = root.path("moves").findParents("move", null);
-        List<String> pokeMoves = movesPath
-            .stream()
-            .map(move -> move.path("move").path("name").asText())
-            .collect(Collectors.toList());
+        List<JsonNode> movesNodes = root.path("moves").findParents("move", null);
+        Assert.notNull(movesNodes.toArray(), "lista de nomes dos ataques não encontrado");
         
-        Pokemon pokemon = new Pokemon(id.asInt(), name.asText(), baseExperience.asInt(), pokeMoves);
-        ResponseEntity<Pokemon> pokemonResponse 
-            = new ResponseEntity<Pokemon>(pokemon, response.getHeaders(), HttpStatus.OK);
-        
-        return pokemonResponse;
+        Pokemon pokemon = new Pokemon();
+        pokemon.setId(id.asInt());
+        pokemon.setName(name.asText());
+        pokemon.setBaseExperience(baseExperience.asInt());
+        pokemon.setMoves(movesNodes);
+        // se inserir moves com setMoves, não será necessário usar updateMovesNamesList
+        //pokemon.updateMovesNamesList();
+
+        return new ResponseEntity<Pokemon>(pokemon, response.getHeaders(), HttpStatus.OK);
     }
     
+    public ResponseEntity<Pokemon> getPokemonJsonToClass(String pokeName) 
+        throws JsonMappingException, JsonProcessingException {
+
+        ResponseEntity<Pokemon> response
+            = restTemplate.getForEntity(pokeApiBaseUrl + pokeName, Pokemon.class);
+
+        Assert.isTrue(response.getStatusCode() == HttpStatus.OK, "request not ok");
+
+        return response;
+    }
 }

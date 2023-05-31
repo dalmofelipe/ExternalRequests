@@ -33,4 +33,11 @@ public class RestTemplateTestController {
         return this.service.getPokemonJsonData(pokeName.toLowerCase());
     }
 
+    @GetMapping(value = "/pokemon/class/{pokeName}")
+    public ResponseEntity<Pokemon> pokemonInfoToClass(@PathVariable String pokeName) 
+        throws JsonMappingException, JsonProcessingException {
+
+        return this.service.getPokemonJsonToClass(pokeName.toLowerCase());
+    }
+
 }
