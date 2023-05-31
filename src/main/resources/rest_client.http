@@ -1,9 +1,10 @@
 @PORT=8000
 @HOST=http://localhost
+@POKEMON_NAME=pikachu
 
 
 ###
-GET {{HOST}}:{{PORT}}/rest-template/test HTTP/1.1
+GET {{HOST}}:{{PORT}}/rest-template/pokemon/{{POKEMON_NAME}} HTTP/1.1
 
 
 ###

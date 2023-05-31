@@ -1,0 +1,6 @@
+@POKEMON_URI_BASE=https://pokeapi.co/api/v2/pokemon/
+@POKEMON_NAME=bulbasaur
+
+
+###
+GET {{POKEMON_URI_BASE}}/{{POKEMON_NAME}} HTTP/1.1
