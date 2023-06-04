@@ -1,6 +1,6 @@
 @PORT=8000
 @HOST=http://localhost
-@POKEMON_NAME=charmander
+@POKEMON_NAME=mew
 
 
 ### WEB CLIENT
