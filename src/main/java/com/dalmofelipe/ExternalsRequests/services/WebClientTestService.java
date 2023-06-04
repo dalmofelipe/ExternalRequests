@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.dalmofelipe.ExternalsRequests.dtos.Pokemon;
@@ -18,9 +19,18 @@ public class WebClientTestService {
 
     private final String pokemonUrl = "https://pokeapi.co/api/v2/pokemon/";
 
+    // configuração necessária, pois dependendo do pokemon pesquisado,
+    // a pokeapi pode retornar muitos dados na response, estourando 
+    // o limite padrão do springboot que é igual a 256 Kibibytes.
+    final int size = 16 * 1024 * 1024; // 16MB
+    final ExchangeStrategies strategies = ExchangeStrategies.builder()
+        .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
+        .build();
+
     private WebClient newClient(String baseUrl) {
         return WebClient
             .builder()
+            .exchangeStrategies(strategies)
             .filter(errorHandler())
             .baseUrl(baseUrl)
             .build();
