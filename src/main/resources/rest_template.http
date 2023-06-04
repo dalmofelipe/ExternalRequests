@@ -1,6 +1,6 @@
 @PORT=8000
 @HOST=http://localhost
-@POKEMON_NAME=blastoise
+@POKEMON_NAME=charmander
 
 
 ### REST TEMPLATE

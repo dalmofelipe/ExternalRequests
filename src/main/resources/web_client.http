@@ -1,0 +1,7 @@
+@PORT=8000
+@HOST=http://localhost
+@POKEMON_NAME=charmander
+
+
+### WEB CLIENT
+GET {{HOST}}:{{PORT}}/web-client/pokemon/{{POKEMON_NAME}} HTTP/1.1

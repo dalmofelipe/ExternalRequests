@@ -15,7 +15,7 @@ public class Pokemon {
     @JsonProperty("base_experience")
     private Integer baseExperience;
 
-    private List<JsonNode> moves;
+    private List<JsonNode> moves; // woooohhww web client já trabalha com JsonNodes
     
     private List<String> namesMoves;
 
